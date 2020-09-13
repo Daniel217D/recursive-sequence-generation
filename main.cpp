@@ -54,7 +54,7 @@ public:
 };
 
 int main() {
-    (new Generator)->generate(5);
+    (new Generator)->generate(100);
 
     return 0;
 }
