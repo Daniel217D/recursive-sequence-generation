@@ -1,5 +1,11 @@
 # recursive sequence generation
  
+ Write a program for generating m-sequences 0 and 1 satisfying both requirements:
+
+1) the number of zeros must be odd;
+
+2) the number of zeros must be less than the number of ones by no more than 3.
+
 ```cpp
 (new Generator)->generate(100);
 
