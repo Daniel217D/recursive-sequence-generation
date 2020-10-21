@@ -1,65 +1,55 @@
 #include <iostream>
 
-using namespace std;
+using std::cin;
+using std::cout;
+using std::string;
 
 /**
  10. Написать программу генерации m-последовательностей 0 и 1, удовлетворяющих обоим требованиям:
     1) число нулей должно быть нечётно;
-    2) число нулей должно быть меньше числа единиц не больше, чем на 3.
+    2) число нулей должно быть меньше числа единиц, но не больше, чем на 3.
  */
-class Generator {
-private:
-    int amount;
-    int zero = 1;
-    int one = 0;
+unsigned int count (string str, char c) {
+    unsigned int result = 0;
 
-    void generate_rec(string str, int zero, int one) {
-        if (this->amount == 0) {
-            return;
-        }
-
-        if (zero > 0) {
-            string temp = str;
-            temp.push_back('0');
-            generate_rec(temp, zero - 1, one);
-        }
-
-        if (one > 0) {
-            string temp = str;
-            temp.push_back('1');
-            generate_rec(temp, zero, one - 1);
-        }
-
-        if (zero == 0 && one == 0) {
-            this->amount--;
-            cout << str << "\n";
-        }
+    for (char i : str) {
+        result += i == c;
     }
 
-public:
-    void generate(int amount) {
-        this->amount = amount;
-        while (this->amount > 0) {
-            if (this->zero > 0) {
-                generate_rec("0", this->zero - 1, this->one);
-            }
+    return result;
+}
 
-            if (this->one > 0) {
-                generate_rec("1", this->zero, this->one - 1);
-            }
+class Generator {
+private:
+    unsigned int r;
 
-            if (this->one - this->zero < 3) {
-                this->one++;
-            } else {
-                this->zero += 2;
-                this->one = 0;
+    void genetate_r(unsigned int k, string arr = "") {
+        if(k == r) {
+            unsigned int zeros = count(arr, '0');
+            unsigned int ones = count(arr, '1');
+            if(zeros % 2 == 0 || ones - zeros > 3) {
+                return;
+            }
+            cout << arr << "\n";
+        } else {
+            for (unsigned int i = 0; i <= 1; ++i) {
+                string temp = arr;
+                temp.push_back('0' + i);
+                genetate_r(k+1, temp);
             }
         }
+    }
+public:
+    void generate(unsigned int _r) {
+        r = _r;
+        genetate_r(0);
     }
 };
 
 int main() {
-    (new Generator)->generate(100);
+    unsigned int r;
+    cin >> r;
+    (new Generator)->generate(r);
 
     return 0;
 }
